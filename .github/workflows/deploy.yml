@@ -18,6 +18,11 @@ jobs:
           echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
+      - name: Check Docker secrets
+        run: |
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}"
+          if [ -z "${{ secrets.DOCKER_PASSWORD }}" ]; then echo "DOCKER_PASSWORD está vacío"; else echo "DOCKER_PASSWORD está seteado"; fi
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
